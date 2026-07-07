@@ -1,3 +1,4 @@
+//Imports
 import { useState } from "react";
 
 import Calendar from "./components/calendar";
@@ -8,6 +9,10 @@ import Footer from "./components/Footer";
 import Settings from "./components/Settings";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
+
+import { supabase } from "./supabaseClient";
+
+console.log(supabase);
 
 function App() {
     const [selectedDay, setSelectedDay] = useState(null);
