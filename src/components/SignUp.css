@@ -1,0 +1,135 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap');
+
+:root {
+    --bg: #FAFAF8;
+    --surface: #FFFFFF;
+    --text: #1C1B1A;
+    --text-muted: #7A756D;
+    --border: #E9E4DB;
+    --gold: #B08D57;
+    --gold-dark: #8C6D3F;
+    --gold-light: #F1E7D4;
+    --shadow: rgba(28, 27, 26, 0.07);
+}
+
+.signUpWrapper {
+    min-height: 100vh;
+    min-height: 100dvh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    background: var(--bg);
+    padding: 32px 20px;
+    padding-top: max(32px, env(safe-area-inset-top));
+    padding-bottom: max(32px, env(safe-area-inset-bottom));
+    box-sizing: border-box;
+}
+
+.signUpWrapper h1 {
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 1.7rem;
+    color: var(--text);
+    margin: 0 0 28px 0;
+    text-align: center;
+}
+
+.signUpWrapper form {
+    width: 100%;
+    max-width: 360px;
+    display: flex;
+    flex-direction: column;
+    background: var(--surface);
+    padding: 24px 20px;
+    border-radius: 18px;
+    box-shadow: 0 2px 14px var(--shadow);
+    box-sizing: border-box;
+}
+
+.signUpWrapper label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+    margin: 16px 0 6px 0;
+}
+
+.signUpWrapper label:first-of-type {
+    margin-top: 0;
+}
+
+.signUpWrapper input {
+    width: 100%;
+    box-sizing: border-box;
+    padding: 11px 13px;
+    border: 1px solid var(--border);
+    border-radius: 10px;
+    background: var(--bg);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.95rem;
+    transition: border-color 0.15s ease, box-shadow 0.15s ease;
+}
+
+.signUpWrapper input::placeholder {
+    color: var(--text-muted);
+    opacity: 0.7;
+}
+
+.signUpWrapper input:focus {
+    outline: none;
+    border-color: var(--gold);
+    box-shadow: 0 0 0 3px var(--gold-light);
+}
+
+.signUpWrapper button[type="submit"] {
+    width: 100%;
+    margin-top: 26px;
+    padding: 13px 26px;
+    border: none;
+    border-radius: 10px;
+    background: var(--gold);
+    color: #FFFFFF;
+    font-family: 'Inter', sans-serif;
+    font-weight: 600;
+    font-size: 0.9rem;
+    letter-spacing: 0.02em;
+    cursor: pointer;
+    transition: background 0.15s ease, transform 0.1s ease;
+}
+
+.signUpWrapper button[type="submit"]:hover {
+    background: var(--gold-dark);
+}
+
+.signUpWrapper button[type="submit"]:active {
+    transform: scale(0.98);
+}
+
+.signUpWrapper button[type="button"] {
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px 26px;
+    border: none;
+    background: none;
+    color: var(--text-muted);
+    font-family: 'Inter', sans-serif;
+    font-weight: 500;
+    font-size: 0.8rem;
+    cursor: pointer;
+    transition: color 0.15s ease;
+}
+
+.signUpWrapper button[type="button"]:hover {
+    color: var(--gold-dark);
+    text-decoration: underline;
+}
+
+.signUpWrapper button[type="button"]:focus-visible,
+.signUpWrapper button[type="submit"]:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+}

@@ -1,0 +1,64 @@
+@import url('https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600&display=swap');
+
+:root {
+    --bg: #FAFAF8;
+    --surface: #FFFFFF;
+    --text: #1C1B1A;
+    --text-muted: #7A756D;
+    --border: #E9E4DB;
+    --gold: #B08D57;
+    --gold-dark: #8C6D3F;
+    --gold-light: #F1E7D4;
+    --shadow: rgba(28, 27, 26, 0.07);
+}
+
+.footerWrapper {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-around;
+    align-items: center;
+    background: var(--surface);
+    padding: 10px 20px;
+    padding-bottom: max(10px, env(safe-area-inset-bottom));
+    border-radius: 18px 18px 0 0;
+    box-shadow: 0 -2px 14px var(--shadow);
+    position: sticky;
+    bottom: 0;
+    z-index: 10;
+}
+
+.footerWrapper button {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    gap: 4px;
+    padding: 6px 20px;
+    border: none;
+    border-radius: 12px;
+    background: none;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: color 0.15s ease, background 0.15s ease, transform 0.1s ease;
+}
+
+.footerWrapper button p {
+    margin: 0;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.01em;
+}
+
+.footerWrapper button:hover {
+    color: var(--gold-dark);
+    background: var(--gold-light);
+}
+
+.footerWrapper button:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+}
+
+.footerWrapper button:active {
+    transform: scale(0.94);
+}

@@ -1,0 +1,59 @@
+@import url('https://fonts.googleapis.com/css2?family=Fraunces:opsz,wght@9..144,500;9..144,600&family=Inter:wght@400;500;600&display=swap');
+
+:root {
+    --bg: #FAFAF8;
+    --surface: #FFFFFF;
+    --text: #1C1B1A;
+    --text-muted: #7A756D;
+    --border: #E9E4DB;
+    --gold: #B08D57;
+    --gold-dark: #8C6D3F;
+    --gold-light: #F1E7D4;
+    --shadow: rgba(28, 27, 26, 0.07);
+}
+
+.statisticsWrapper {
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    gap: 12px;
+    margin: 16px;
+}
+
+.statisticsBox {
+    border: none;
+    margin: 0;
+    padding: 18px 14px;
+    background: var(--surface);
+    border-radius: 16px;
+    box-shadow: 0 2px 14px var(--shadow);
+    text-align: center;
+    position: relative;
+}
+
+.statisticsBox p {
+    margin: 0 0 8px 0;
+    font-family: 'Inter', sans-serif;
+    font-size: 0.7rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 0.05em;
+    color: var(--text-muted);
+}
+
+.statisticsBox h1 {
+    margin: 0;
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 1.6rem;
+    color: var(--gold-dark);
+}
+
+.statisticsBox::after {
+    content: "";
+    display: block;
+    width: 28px;
+    height: 3px;
+    background: var(--gold);
+    border-radius: 2px;
+    margin: 10px auto 0;
+}
