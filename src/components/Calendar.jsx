@@ -1,16 +1,17 @@
 //Imports
 import "./Calendar.css";
 
-//Returns a table with the days of the month
-function tableOfDays() {
-    const today = new Date();
+import { useState } from "react";
 
-    const month = today.getMonth();
-    const year = today.getFullYear();
+import { ArrowLeftIcon, ArrowRightIcon } from "@phosphor-icons/react";
+
+//Returns a table with the days of the month
+function tableOfDays(month, year) {
 
     const calendar = [];
 
     const firstDayOfMonth = new Date(year, month, 1);
+
     const startingGap = (firstDayOfMonth.getDay() + 6) % 7;
     for(let i = 0; i < startingGap; i++) {
         calendar.push(null);
@@ -24,16 +25,48 @@ function tableOfDays() {
     return calendar;
 }
 
-function openLogging(day) {
-
-}
-
 //Calendar structure
 function Calendar({ setSelectedDay }) {
-    const calendar = tableOfDays();
+
+    const today = new Date();
+
+    const [month, setMonth] = useState(today.getMonth());
+    const [year, setYear] = useState(today.getFullYear());
+
+    const calendar = tableOfDays(month, year);
+
+    const monthNames = ["January","February","March","April","May","June","July","August","September","October","November","December"];
+    let monthName = monthNames[month];
+
+    function previousMonth() {
+
+        if(month === 0) {
+            setYear(year - 1);
+            setMonth(11);
+        }
+        else setMonth(month - 1);
+    }
+
+    function nextMonth() {
+        
+        if(month === 11) {
+            setMonth(0);
+            setYear(year + 1);
+        } else {
+            setMonth(month + 1);
+        }
+    }
 
     return (
         <div className="calendarWrapper">
+            <div className="switchingMonths">
+                <button type="button" onClick={previousMonth}><ArrowLeftIcon size={32} /></button>
+
+                <h2>{monthName} {year}</h2>
+                
+                <button type="button" onClick={nextMonth}><ArrowRightIcon size={32} /></button>
+            </div>
+
             <div className="weekdays">
                 <p>Mon</p>
                 <p>Tue</p>
@@ -46,9 +79,13 @@ function Calendar({ setSelectedDay }) {
 
             <div className="calendar">
                 {calendar.map((day, index) => (
-                    <button type="button" onClick={() => setSelectedDay(day)} key={index} className="day">
-                        {day}
-                    </button>
+                    day !== null ? (
+                        <button type="button" onClick={() => setSelectedDay({day, month, year})} key={index} className="day">
+                            {day}
+                        </button>
+                     ) : (
+                        <div key={index} className="day"></div>
+                     )
                 ))}
             </div>
         </div>

@@ -20,6 +20,49 @@
     box-shadow: 0 2px 14px var(--shadow);
 }
 
+.switchingMonths {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 16px;
+}
+
+.switchingMonths h2 {
+    margin: 0;
+    font-family: 'Fraunces', serif;
+    font-weight: 600;
+    font-size: 1.15rem;
+    color: var(--text);
+    text-align: center;
+}
+
+.switchingMonths button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border: none;
+    background: none;
+    padding: 6px;
+    border-radius: 8px;
+    color: var(--text-muted);
+    cursor: pointer;
+    transition: color 0.15s ease, background 0.15s ease;
+}
+
+.switchingMonths button:hover {
+    color: var(--gold-dark);
+    background: var(--gold-light);
+}
+
+.switchingMonths button:active {
+    transform: scale(0.94);
+}
+
+.switchingMonths button:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+}
+
 .weekdays {
     display: grid;
     grid-template-columns: repeat(7, 1fr);
@@ -51,7 +94,8 @@
 
 .day {
     margin: 0;
-    border: 1px solid var(--border);
+    padding: 0;
+    border: 1px solid transparent;
     border-radius: 10px;
     min-height: 40px;
     min-width: 30px;
@@ -62,25 +106,46 @@
     font-size: 0.9rem;
     font-weight: 500;
     color: var(--text);
+    background: transparent;
+}
+
+button.day {
+    border-color: var(--border);
     background: var(--bg);
     cursor: pointer;
     transition: background 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
 }
 
-.day:hover {
+button.day:hover {
     border-color: var(--gold);
     background: var(--gold-light);
     color: var(--gold-dark);
 }
 
-.day:focus-visible {
+button.day:focus-visible {
     outline: 2px solid var(--gold);
     outline-offset: 2px;
 }
 
-.day:active {
+button.day:active {
     background: var(--gold);
     border-color: var(--gold);
     color: #FFFFFF;
     transform: scale(0.95);
+}
+
+@media (max-width: 340px) {
+    .calendarWrapper {
+        margin: 10px;
+        padding: 14px;
+    }
+
+    .calendar {
+        gap: 4px;
+    }
+
+    .day {
+        min-height: 34px;
+        font-size: 0.82rem;
+    }
 }
