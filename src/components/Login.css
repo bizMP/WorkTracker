@@ -10,6 +10,9 @@
     --gold-dark: #8C6D3F;
     --gold-light: #F1E7D4;
     --shadow: rgba(28, 27, 26, 0.07);
+    --error: #B3413E;
+    --error-bg: #FBEAE9;
+    --error-border: #F0C9C7;
 }
 
 .loginWrapper {
@@ -47,6 +50,34 @@
     box-sizing: border-box;
 }
 
+.errorBox {
+    width: 100%;
+    max-width: 360px;
+    box-sizing: border-box;
+    margin-bottom: 16px;
+    padding: 12px 14px;
+    border: 1px solid var(--error-border);
+    border-radius: 10px;
+    background: var(--error-bg);
+    color: var(--error);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 500;
+    line-height: 1.4;
+    animation: errorIn 0.2s ease;
+}
+
+@keyframes errorIn {
+    from {
+        opacity: 0;
+        transform: translateY(-4px);
+    }
+    to {
+        opacity: 1;
+        transform: translateY(0);
+    }
+}
+
 .loginWrapper label {
     font-family: 'Inter', sans-serif;
     font-size: 0.72rem;
@@ -79,10 +110,26 @@
     opacity: 0.7;
 }
 
+.loginWrapper input:hover {
+    border-color: #D8D0C1;
+}
+
 .loginWrapper input:focus {
     outline: none;
     border-color: var(--gold);
     box-shadow: 0 0 0 3px var(--gold-light);
+}
+
+.loginWrapper input:disabled {
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.loginWrapper input:-webkit-autofill,
+.loginWrapper input:-webkit-autofill:focus {
+    -webkit-text-fill-color: var(--text);
+    -webkit-box-shadow: 0 0 0 1000px var(--bg) inset;
+    transition: background-color 9999s ease-in-out 0s;
 }
 
 .loginWrapper button[type="submit"] {
@@ -101,12 +148,18 @@
     transition: background 0.15s ease, transform 0.1s ease;
 }
 
-.loginWrapper button[type="submit"]:hover {
+.loginWrapper button[type="submit"]:hover:not(:disabled) {
     background: var(--gold-dark);
 }
 
-.loginWrapper button[type="submit"]:active {
+.loginWrapper button[type="submit"]:active:not(:disabled) {
     transform: scale(0.98);
+}
+
+.loginWrapper button[type="submit"]:disabled {
+    background: var(--gold);
+    opacity: 0.65;
+    cursor: not-allowed;
 }
 
 .loginWrapper button[type="button"] {
@@ -132,4 +185,20 @@
 .loginWrapper button[type="submit"]:focus-visible {
     outline: 2px solid var(--gold);
     outline-offset: 2px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .errorBox {
+        animation: none;
+    }
+}
+
+@media (max-width: 340px) {
+    .loginWrapper form {
+        padding: 20px 16px;
+    }
+
+    .loginWrapper h1 {
+        font-size: 1.5rem;
+    }
 }

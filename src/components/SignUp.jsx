@@ -5,7 +5,7 @@ import { useState } from "react";
 import { supabase } from "../supabase"
 
 //Sign Up structure
-function SignUp({ setPage }) {
+function SignUp({ setPage, setSession }) {
 
     const [firstName, setFirstName] = useState("");
     const [lastName, setLastName] = useState("");
@@ -17,9 +17,9 @@ function SignUp({ setPage }) {
 
     async function handleSignUp(event) {
 
-        try {
-            event.preventDefault();
+        event.preventDefault();
 
+        try {
             setError(null);
 
             setLoading(true);
@@ -39,6 +39,7 @@ function SignUp({ setPage }) {
                 setError(authError.message);
             }
             else {
+                setSession(data.session)
                 setPage("calendar");
             }
         }
