@@ -10,10 +10,6 @@ import Settings from "./components/Settings";
 import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 
-import { supabase } from "./supabaseClient";
-
-console.log(supabase);
-
 function App() {
     const [selectedDay, setSelectedDay] = useState(null);
     const [page, setPage] = useState("login");
