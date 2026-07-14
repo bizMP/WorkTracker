@@ -21,6 +21,8 @@ function App() {
     const [error, setError] = useState(null);
     const [sessionLoading, setSessionLoading] = useState(true);
 
+    const [workLogs, setWorkLogs] = useState([]);
+
     async function checkForSession() {
 
         try{
@@ -69,7 +71,7 @@ function App() {
                 <>
                     <Header />
                     <Calendar setSelectedDay={setSelectedDay} />
-                    <LoggingHours selectedDay={selectedDay} />
+                    <LoggingHours selectedDay={selectedDay} setWorkLogs={setWorkLogs} workLogs={workLogs} />
                     <Statistics />
                     <Footer setPage={setPage} />
                 </>

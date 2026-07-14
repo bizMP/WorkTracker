@@ -54,7 +54,26 @@
     color: var(--text);
     font-family: 'Inter', sans-serif;
     font-size: 1rem;
+    text-align: center;
+    vertical-align: middle;
     transition: border-color 0.15s ease, box-shadow 0.15s ease;
+    -moz-appearance: textfield;
+    appearance: textfield;
+}
+
+.workingTimeForm input[type="number"]::-webkit-outer-spin-button,
+.workingTimeForm input[type="number"]::-webkit-inner-spin-button {
+    -webkit-appearance: none;
+    margin: 0;
+}
+
+.workingTimeForm input[type="number"]::placeholder {
+    color: var(--text-muted);
+    opacity: 0.6;
+}
+
+.workingTimeForm input[type="number"]:hover {
+    border-color: #D8D0C1;
 }
 
 .workingTimeForm input[type="number"]:focus {
@@ -63,11 +82,17 @@
     box-shadow: 0 0 0 3px var(--gold-light);
 }
 
+.workingTimeForm input[type="number"]:disabled {
+    opacity: 0.55;
+    cursor: not-allowed;
+}
+
 .workingTimeForm label {
     margin: 0 18px 0 8px;
     font-family: 'Inter', sans-serif;
     font-size: 0.85rem;
     color: var(--text-muted);
+    vertical-align: middle;
 }
 
 .workingTimeForm button[type="submit"] {
@@ -86,10 +111,36 @@
     transition: background 0.15s ease, transform 0.1s ease;
 }
 
-.workingTimeForm button[type="submit"]:hover {
+.workingTimeForm button[type="submit"]:hover:not(:disabled) {
     background: var(--gold-dark);
 }
 
-.workingTimeForm button[type="submit"]:active {
+.workingTimeForm button[type="submit"]:active:not(:disabled) {
     transform: scale(0.97);
+}
+
+.workingTimeForm button[type="submit"]:disabled {
+    background: var(--gold);
+    opacity: 0.6;
+    cursor: not-allowed;
+}
+
+.workingTimeForm button[type="submit"]:focus-visible {
+    outline: 2px solid var(--gold);
+    outline-offset: 2px;
+}
+
+@media (max-width: 340px) {
+    .loggingHoursWrapper {
+        margin: 10px;
+        padding: 16px;
+    }
+
+    .loggingHoursWrapper h1 {
+        font-size: 1.1rem;
+    }
+
+    .workingTimeForm label {
+        margin: 0 12px 0 6px;
+    }
 }
