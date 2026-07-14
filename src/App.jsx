@@ -70,7 +70,7 @@ function App() {
             {page === "calendar" && (
                 <>
                     <Header />
-                    <Calendar setSelectedDay={setSelectedDay} />
+                    <Calendar setSelectedDay={setSelectedDay} workLogs={workLogs} />
                     <LoggingHours selectedDay={selectedDay} setWorkLogs={setWorkLogs} workLogs={workLogs} />
                     <Statistics />
                     <Footer setPage={setPage} />

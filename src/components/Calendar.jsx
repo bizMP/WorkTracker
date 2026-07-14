@@ -26,7 +26,7 @@ function tableOfDays(month, year) {
 }
 
 //Calendar structure
-function Calendar({ setSelectedDay }) {
+function Calendar({ setSelectedDay, workLogs }) {
 
     const today = new Date();
 
@@ -78,15 +78,19 @@ function Calendar({ setSelectedDay }) {
             </div>
 
             <div className="calendar">
-                {calendar.map((day, index) => (
-                    day !== null ? (
-                        <button type="button" onClick={() => setSelectedDay({day, month, year})} key={index} className="day">
-                            {day}
-                        </button>
-                     ) : (
-                        <div key={index} className="day"></div>
-                     )
-                ))}
+                {calendar.map((day, index) => {
+                    if(day === null) {
+                        return <div key={index} className="day"></div>
+                    }
+
+                    const currentDay = new Date(year, month, day);
+
+                    const hasWorkLogged = workLogs.some(log => log.date.getTime() === currentDay.getTime());
+
+                    return(
+                        <button type="button" key={index} className={hasWorkLogged ? "loggedDay" : "day"} onClick={() => setSelectedDay({day, month, year})}>{day}</button>
+                    );
+                })}
             </div>
         </div>
     );

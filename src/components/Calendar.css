@@ -134,6 +134,39 @@ button.day:active {
     transform: scale(0.95);
 }
 
+.loggedDay {
+    margin: 0;
+    padding: 0;
+    border: 1px solid var(--gold);
+    border-radius: 10px;
+    min-height: 40px;
+    min-width: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Fraunces', serif;
+    font-size: 0.9rem;
+    font-weight: 600;
+    color: #FFFFFF;
+    background: var(--gold);
+    cursor: pointer;
+    transition: background 0.15s ease, border-color 0.15s ease, transform 0.1s ease;
+}
+
+.loggedDay:hover {
+    background: var(--gold-dark);
+    border-color: var(--gold-dark);
+}
+
+.loggedDay:focus-visible {
+    outline: 2px solid var(--gold-dark);
+    outline-offset: 2px;
+}
+
+.loggedDay:active {
+    transform: scale(0.95);
+}
+
 @media (max-width: 340px) {
     .calendarWrapper {
         margin: 10px;
@@ -145,6 +178,11 @@ button.day:active {
     }
 
     .day {
+        min-height: 34px;
+        font-size: 0.82rem;
+    }
+
+    .loggedDay {
         min-height: 34px;
         font-size: 0.82rem;
     }

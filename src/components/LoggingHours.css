@@ -95,6 +95,18 @@
     vertical-align: middle;
 }
 
+.workingTimeForm p {
+    width: fit-content;
+    margin: 14px 0 0 0;
+    padding: 6px 12px;
+    border-radius: 8px;
+    background: var(--gold-light);
+    color: var(--gold-dark);
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 500;
+}
+
 .workingTimeForm button[type="submit"] {
     display: block;
     margin-top: 18px;
