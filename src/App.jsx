@@ -23,6 +23,13 @@ function App() {
 
     const [workLogs, setWorkLogs] = useState([]);
 
+    const [userSettings, setUserSettings] = useState({
+        fname: "",
+        lname: "",
+        hourlyRate: 0,
+        vacationDays: 0
+    });
+
     async function checkForSession() {
 
         try{
@@ -53,6 +60,38 @@ function App() {
         checkForSession();
     }, []);
 
+    async function getUserSettings() {
+        try {
+            const { data, error } = await supabase
+                .from("user_settings")
+                .select("*")
+                .eq("id", session.user.id)
+                .single();
+
+            if(error) {
+                setError(error.message);
+                return;
+            }
+
+            setUserSettings({
+                fname: data.first_name,
+                lname: data.last_name,
+                hourlyRate: data.hourly_rate,
+                vacationDays: data.vacation_days
+            });
+
+        } 
+        catch(err) {
+            setError(err.message);
+        }
+    }
+
+    useEffect(() => {
+        if(session) {
+            getUserSettings();
+        }
+    }, [session]);
+
     return (
         <>
             {page === "login" && (
@@ -80,7 +119,7 @@ function App() {
             {page === "settings" && (
                 <>
                   <Header />
-                  <Settings />
+                  <Settings userSettings={userSettings} setUserSettings={setUserSettings} session={session} />
                   <Footer setPage={setPage} />
                 </>
             )}

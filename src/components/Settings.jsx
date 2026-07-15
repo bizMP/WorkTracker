@@ -1,30 +1,71 @@
 //Imports
 import "./Settings.css";
-import { PlusCircleIcon } from "@phosphor-icons/react";
+
+import { useState } from "react";
+
+import { supabase } from "../supabase";
 
 //Settings structure
-function Settings() {
+function Settings({ userSettings, setUserSettings, session }) {
+
+    const [loading, setLoading] = useState(false);
+
+    const [error, setError] = useState(null);
+
+    async function saveChanges(event) {
+        
+        event.preventDefault();
+
+        try {
+            setLoading(true);
+
+            const { data, error: updateError } = await supabase .from("user_settings") .update({
+                first_name: userSettings.fname,
+                last_name: userSettings.lname,
+                hourly_rate: userSettings.hourlyRate,
+                vacation_days: userSettings.vacationDays
+            }) 
+            .eq("id", session.user.id);
+
+            if(updateError) {
+                console.log(updateError);
+                setError(updateError.message);
+            }
+        }
+        catch(err) {
+            console.log(err)
+            setError(err.message);
+        }
+        finally {
+            setLoading(false);
+        }
+    }
+
     return(
         <div className="settingsWrapper"> 
-            <img src="#" alt="Profile Image"></img>
-            <PlusCircleIcon size={16} />
-            <form>
+            <form onSubmit={saveChanges}>
                 <label htmlFor="firstName">First Name</label>
-                <input type="text" id="firstName"></input>
+                <input type="text" id="firstName" value={userSettings.fname} onChange={(event) => setUserSettings({...userSettings, fname: event.target.value})}></input>
                 <label htmlFor="lastName">Last Name</label>
-                <input type="text" id="lastName"></input>
+                <input type="text" id="lastName" value={userSettings.lname} onChange={(event) => setUserSettings({...userSettings, lname: event.target.value})}></input>
 
-                <label htmlFor="hourlyRate">Hourly Rate</label>
-                <input type="number" placeholder="0.00$" id="hourlyRate"></input>
+                <label htmlFor="hourlyRate">Hourly Rate ($)</label>
+                <input type="number" id="hourlyRate" value={userSettings.hourlyRate} onChange={(event) => setUserSettings({...userSettings, hourlyRate: Number(event.target.value)})}></input>
                 <label htmlFor="raise">Raise</label>
                 <input type="number" placeholder="0.00$" id="raise"></input>
                 <label htmlFor="dateOfRaise">Date Of Raise</label>
                 <input type="date" id="dateOfRaise"></input>
 
                 <label htmlFor="vacationDays">Vacation Days</label>
-                <input type="number" placeholder="0" id="vacationDays"></input>
+                <input type="number" id="vacationDays" value={userSettings.vacationDays} onChange={(event) => setUserSettings({...userSettings, vacationDays: Number(event.target.value)})}></input>
+                
+                {error && (
+                    <div className="errorBox">
+                        {error}
+                    </div>
+                )}
 
-                <button type="submit">Save Changes</button>
+                <button type="submit">{loading ? "Saving Changes..." : "Save Changes"}</button>
             </form>
         </div>
     );
