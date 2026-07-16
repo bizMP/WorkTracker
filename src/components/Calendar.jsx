@@ -83,9 +83,9 @@ function Calendar({ setSelectedDay, workLogs }) {
                         return <div key={index} className="day"></div>
                     }
 
-                    const currentDay = new Date(year, month, day);
+                    const currentDate = `${year}-${String(month + 1).padStart(2, "0")}-${String(day).padStart(2, "0")}`;
 
-                    const hasWorkLogged = workLogs.some(log => log.date.getTime() === currentDay.getTime());
+                    const hasWorkLogged = workLogs.some(log => log.date === currentDate);
 
                     return(
                         <button type="button" key={index} className={hasWorkLogged ? "loggedDay" : "day"} onClick={() => setSelectedDay({day, month, year})}>{day}</button>

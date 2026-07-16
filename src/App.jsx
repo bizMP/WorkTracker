@@ -92,6 +92,35 @@ function App() {
         }
     }, [session]);
 
+    async function getUserWorkLogs() {
+        try {
+            const {data: workLogsData, error: workLogsError} = await supabase .from("work_logs") .select("*") .eq("user_id", session.user.id);
+
+            if(workLogsError) {
+                setError(workLogsError.message);
+            }
+
+            if(workLogsData) {
+                const formattedLogs = workLogsData.map(log => ({
+                    date: log.work_date,
+                    hours: log.work_hours,
+                    minutes: log.work_minutes
+                }));
+
+                setWorkLogs(formattedLogs);
+            }
+        }
+        catch(err) {
+            setError(err.message);
+        }
+    }
+
+    useEffect(() => {
+        if(session) {
+            getUserWorkLogs();
+        }
+    }, [session]);
+
     return (
         <>
             {page === "login" && (
@@ -110,7 +139,7 @@ function App() {
                 <>
                     <Header />
                     <Calendar setSelectedDay={setSelectedDay} workLogs={workLogs} />
-                    <LoggingHours selectedDay={selectedDay} setWorkLogs={setWorkLogs} workLogs={workLogs} />
+                    <LoggingHours selectedDay={selectedDay} setWorkLogs={setWorkLogs} workLogs={workLogs} session={session} />
                     <Statistics />
                     <Footer setPage={setPage} />
                 </>

@@ -3,41 +3,62 @@ import "./LoggingHours.css";
 
 import { useState } from "react";
 
+import { supabase } from "../supabase";
+
 //Logging hours structure
-function LoggingHours({ selectedDay, setWorkLogs, workLogs }) {
+function LoggingHours({ selectedDay, setWorkLogs, workLogs, session }) {
 
     const [workHours, setWorkHours] = useState(0);
     const [workMinutes, setWorkMinutes] = useState(0);
 
-    function handleSubmit(event) {
+    const [error, setError] = useState(null);
+
+    async function handleSubmit(event) {
 
         event.preventDefault();
 
         if (!selectedDay) return;
 
-        const workDate = new Date(selectedDay.year, selectedDay.month, selectedDay.day);
-
+        const workDate = `${selectedDay.year}-${String(selectedDay.month + 1).padStart(2, "0")}-${String(selectedDay.day).padStart(2, "0")}`;
+        
         const updatedWorkLogs = [...workLogs, {date: workDate, hours: workHours, minutes: workMinutes}];
+
         setWorkLogs(updatedWorkLogs);
 
         setWorkHours(0);
         setWorkMinutes(0);
+
+        try {
+            const {data, error: insertError} = await supabase .from("work_logs") .insert({
+                user_id: session.user.id,
+                work_date: workDate,
+                work_hours: workHours,
+                work_minutes: workMinutes
+            });
+
+            if(insertError) {
+                setError(insertError.message);
+            }
+        }
+        catch(err) {
+            setError(err.message);
+        }
     }
 
-    const selectedDate = selectedDay ? (new Date(selectedDay.year, selectedDay.month, selectedDay.day)) : null;
+    const selectedDate = selectedDay ? `${selectedDay.year}-${String(selectedDay.month + 1).padStart(2, "0")}-${String(selectedDay.day).padStart(2, "0")}` : null;
 
-    const workLog = workLogs.find(log => log.date.getTime() === selectedDate.getTime());
+    const workLog = selectedDate ? workLogs.find(log => log.date === selectedDate) : null;
 
-    function handleUpdate(event) {
+    async function handleUpdate(event) {
         
         event.preventDefault();
 
         if (!selectedDay) return;
 
-        const workDate = new Date(selectedDay.year, selectedDay.month, selectedDay.day);
-
+        const workDate = `${selectedDay.year}-${String(selectedDay.month + 1).padStart(2, "0")}-${String(selectedDay.day).padStart(2, "0")}`;
+        
         const updatedWorkLogs = workLogs.map(log => {
-            if(log.date.getTime() === workLog.date.getTime()) {
+            if(log.date === workLog.date) {                
                 return {
                     date: workDate,
                     hours: workHours,
@@ -50,6 +71,15 @@ function LoggingHours({ selectedDay, setWorkLogs, workLogs }) {
 
 
         setWorkLogs(updatedWorkLogs);
+
+        const { data, error } = await supabase
+            .from("work_logs")
+            .update({
+                work_hours: workHours,
+                work_minutes: workMinutes
+            })
+            .eq("user_id", session.user.id)
+            .eq("work_date", workDate)
 
         setWorkHours(0);
         setWorkMinutes(0);
