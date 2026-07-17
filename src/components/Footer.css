@@ -22,8 +22,12 @@
     padding-bottom: max(10px, env(safe-area-inset-bottom));
     border-radius: 18px 18px 0 0;
     box-shadow: 0 -2px 14px var(--shadow);
-    position: sticky;
+    position: fixed;
+    left: 0;
+    right: 0;
     bottom: 0;
+    width: 100%;
+    box-sizing: border-box;
     z-index: 10;
 }
 
@@ -61,4 +65,10 @@
 
 .footerWrapper button:active {
     transform: scale(0.94);
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .footerWrapper button {
+        transition: color 0.15s ease, background 0.15s ease;
+    }
 }

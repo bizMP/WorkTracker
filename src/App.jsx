@@ -13,7 +13,9 @@ import Login from "./components/Login";
 import SignUp from "./components/SignUp";
 
 function App() {
-    const [selectedDay, setSelectedDay] = useState(null);
+    const today = new Date();
+
+    const [selectedDay, setSelectedDay] = useState({day: today.getDate(), month: today.getMonth(), year: today.getFullYear()});
 
     const [page, setPage] = useState("");
 
@@ -104,7 +106,8 @@ function App() {
                 const formattedLogs = workLogsData.map(log => ({
                     date: log.work_date,
                     hours: log.work_hours,
-                    minutes: log.work_minutes
+                    minutes: log.work_minutes,
+                    moneyEarned: log.money_earned
                 }));
 
                 setWorkLogs(formattedLogs);
@@ -137,17 +140,17 @@ function App() {
 
             {page === "calendar" && (
                 <>
-                    <Header />
+                    <Header userSettings={userSettings} />
                     <Calendar setSelectedDay={setSelectedDay} workLogs={workLogs} />
-                    <LoggingHours selectedDay={selectedDay} setWorkLogs={setWorkLogs} workLogs={workLogs} session={session} />
-                    <Statistics />
+                    <LoggingHours selectedDay={selectedDay} setWorkLogs={setWorkLogs} workLogs={workLogs} session={session} userSettings={userSettings} setUserSettings={setUserSettings} />
+                    <Statistics selectedDay={selectedDay} workLogs={workLogs} session={session} />
                     <Footer setPage={setPage} />
                 </>
             )}
 
             {page === "settings" && (
                 <>
-                  <Header />
+                  <Header userSettings={userSettings} />
                   <Settings userSettings={userSettings} setUserSettings={setUserSettings} session={session} />
                   <Footer setPage={setPage} />
                 </>

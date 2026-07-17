@@ -6,7 +6,7 @@ import { useState } from "react";
 import { supabase } from "../supabase";
 
 //Logging hours structure
-function LoggingHours({ selectedDay, setWorkLogs, workLogs, session }) {
+function LoggingHours({ selectedDay, setWorkLogs, workLogs, session, userSettings, setUserSettings }) {
 
     const [workHours, setWorkHours] = useState(0);
     const [workMinutes, setWorkMinutes] = useState(0);
@@ -21,8 +21,10 @@ function LoggingHours({ selectedDay, setWorkLogs, workLogs, session }) {
 
         const workDate = `${selectedDay.year}-${String(selectedDay.month + 1).padStart(2, "0")}-${String(selectedDay.day).padStart(2, "0")}`;
         
-        const updatedWorkLogs = [...workLogs, {date: workDate, hours: workHours, minutes: workMinutes}];
+        const totalHours = workHours + workMinutes / 60;
+        const moneyEarned = totalHours * userSettings.hourlyRate;
 
+        const updatedWorkLogs = [...workLogs, {date: workDate, hours: workHours, minutes: workMinutes, moneyEarned: moneyEarned}];
         setWorkLogs(updatedWorkLogs);
 
         setWorkHours(0);
@@ -33,7 +35,8 @@ function LoggingHours({ selectedDay, setWorkLogs, workLogs, session }) {
                 user_id: session.user.id,
                 work_date: workDate,
                 work_hours: workHours,
-                work_minutes: workMinutes
+                work_minutes: workMinutes,
+                money_earned: moneyEarned.toFixed(2)
             });
 
             if(insertError) {
@@ -57,18 +60,21 @@ function LoggingHours({ selectedDay, setWorkLogs, workLogs, session }) {
 
         const workDate = `${selectedDay.year}-${String(selectedDay.month + 1).padStart(2, "0")}-${String(selectedDay.day).padStart(2, "0")}`;
         
+        const totalHours = workHours + workMinutes / 60;
+        const moneyEarned = totalHours * userSettings.hourlyRate;
+
         const updatedWorkLogs = workLogs.map(log => {
             if(log.date === workLog.date) {                
                 return {
                     date: workDate,
                     hours: workHours,
-                    minutes: workMinutes
+                    minutes: workMinutes,
+                    moneyEarned: moneyEarned
                 };
             }
 
             return log;
         });
-
 
         setWorkLogs(updatedWorkLogs);
 
@@ -76,7 +82,8 @@ function LoggingHours({ selectedDay, setWorkLogs, workLogs, session }) {
             .from("work_logs")
             .update({
                 work_hours: workHours,
-                work_minutes: workMinutes
+                work_minutes: workMinutes,
+                money_earned: moneyEarned.toFixed(2)
             })
             .eq("user_id", session.user.id)
             .eq("work_date", workDate)
@@ -88,7 +95,7 @@ function LoggingHours({ selectedDay, setWorkLogs, workLogs, session }) {
     return(
         <div className="loggingHoursWrapper">
             <h1>{selectedDay ? `${selectedDay.day}.${selectedDay.month + 1}.${selectedDay.year}` : "Select a day"}</h1>
-
+            
             {!workLog ? 
                 (
                     <form className="workingTimeForm" onSubmit={handleSubmit}>

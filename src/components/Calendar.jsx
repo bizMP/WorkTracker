@@ -39,22 +39,45 @@ function Calendar({ setSelectedDay, workLogs }) {
     let monthName = monthNames[month];
 
     function previousMonth() {
+        let newMonth = month;
+        let newYear = year;
 
-        if(month === 0) {
-            setYear(year - 1);
-            setMonth(11);
+        if (month === 0) {
+            newMonth = 11;
+            newYear = year - 1;
+        } else {
+            newMonth = month - 1;
         }
-        else setMonth(month - 1);
+
+        setMonth(newMonth);
+        setYear(newYear);
+
+        setSelectedDay({
+            day: 1,
+            month: newMonth,
+            year: newYear
+        });
     }
 
     function nextMonth() {
-        
-        if(month === 11) {
-            setMonth(0);
-            setYear(year + 1);
+        let newMonth = month;
+        let newYear = year;
+
+        if (month === 11) {
+            newMonth = 0;
+            newYear = year + 1;
         } else {
-            setMonth(month + 1);
+            newMonth = month + 1;
         }
+
+        setMonth(newMonth);
+        setYear(newYear);
+
+        setSelectedDay({
+            day: 1,
+            month: newMonth,
+            year: newYear
+        });
     }
 
     return (

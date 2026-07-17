@@ -45,6 +45,10 @@
     color: var(--text);
     margin: 0;
     flex: 1;
+    min-width: 0;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
 .headerDiv p {
@@ -57,6 +61,7 @@
     display: flex;
     align-items: center;
     gap: 6px;
+    font-variant-numeric: tabular-nums;
 }
 
 .headerDiv p::before {
@@ -66,4 +71,24 @@
     border-radius: 50%;
     background: var(--gold);
     display: inline-block;
+}
+
+@media (max-width: 340px) {
+    .headerDiv {
+        padding: 12px 14px;
+        padding-top: max(12px, env(safe-area-inset-top));
+    }
+
+    .headerDiv img {
+        width: 36px;
+        height: 36px;
+    }
+
+    .headerDiv h2 {
+        font-size: 0.95rem;
+    }
+
+    .headerDiv p {
+        font-size: 0.7rem;
+    }
 }

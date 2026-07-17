@@ -3,7 +3,7 @@ import "./Header.css";
 import { useEffect, useState } from "react";
 
 //Header structure
-function Header() {
+function Header({ userSettings }) {
 
     //Timer and date display
     const [time, setTime] = useState(new Date());
@@ -18,8 +18,7 @@ function Header() {
 
     return (
         <div className="headerDiv">
-            <img src="#" alt="userProfile"></img>
-            <h2>Hello Name</h2>
+            <h2>Hello {userSettings.fname}</h2>
 
             <p>{time.toLocaleTimeString() + " " + time.toLocaleDateString()}</p>
         </div>

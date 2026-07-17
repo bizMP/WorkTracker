@@ -51,13 +51,6 @@ function Settings({ userSettings, setUserSettings, session }) {
 
                 <label htmlFor="hourlyRate">Hourly Rate ($)</label>
                 <input type="number" id="hourlyRate" value={userSettings.hourlyRate} onChange={(event) => setUserSettings({...userSettings, hourlyRate: Number(event.target.value)})}></input>
-                <label htmlFor="raise">Raise</label>
-                <input type="number" placeholder="0.00$" id="raise"></input>
-                <label htmlFor="dateOfRaise">Date Of Raise</label>
-                <input type="date" id="dateOfRaise"></input>
-
-                <label htmlFor="vacationDays">Vacation Days</label>
-                <input type="number" id="vacationDays" value={userSettings.vacationDays} onChange={(event) => setUserSettings({...userSettings, vacationDays: Number(event.target.value)})}></input>
                 
                 {error && (
                     <div className="errorBox">

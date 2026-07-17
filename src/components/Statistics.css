@@ -17,6 +17,7 @@
     grid-template-columns: repeat(2, 1fr);
     gap: 12px;
     margin: 16px;
+    margin-bottom: calc(76px + env(safe-area-inset-bottom));
 }
 
 .statisticsBox {
@@ -46,6 +47,7 @@
     font-weight: 600;
     font-size: 1.6rem;
     color: var(--gold-dark);
+    overflow-wrap: break-word;
 }
 
 .statisticsBox::after {
@@ -56,4 +58,20 @@
     background: var(--gold);
     border-radius: 2px;
     margin: 10px auto 0;
+}
+
+@media (max-width: 340px) {
+    .statisticsWrapper {
+        gap: 8px;
+        margin: 10px;
+        margin-bottom: calc(76px + env(safe-area-inset-bottom));
+    }
+
+    .statisticsBox {
+        padding: 14px 10px;
+    }
+
+    .statisticsBox h1 {
+        font-size: 1.3rem;
+    }
 }
