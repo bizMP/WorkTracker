@@ -36,7 +36,7 @@ function Statistics({ selectedDay, workLogs, session }) {
 
             <div className="statisticsBox">
                 <p>Total Money Earned ({monthName})</p>
-                <h1>{totalMoney}€</h1>
+                <h1>{totalMoney.toFixed(2)}€</h1>
             </div>
         </div>
     );
